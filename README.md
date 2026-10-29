@@ -1,3 +1,4 @@
+
 # 🧭 AI Route Search
 ### Explore the Map. Challenge the Algorithms.
 
@@ -99,9 +100,18 @@ Setup instructions and a live demonstration will be added when available.
 - Support different road networks using JSON data.
 
 ---
+## 👩‍💻 Development Team
+
+**Team Member & Student ID**
+
+- **Tala Daraghmeh** => 12429337
+- **Yazan Nasser** => 12400750
+- **Bahaa Alshami** => 12428749
+
+---
 
 ### 🪐 Every Path Tells a Different Story.
 
 *The destination is the same. The journey is the algorithm.*
 
-**Status:** 🚧 Under Development
+
