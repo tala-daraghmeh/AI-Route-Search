@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0e1727">
+  <title>AI Route Search · Search Strategy Lab</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">↗</div><div><strong>ROUTE<span>LAB</span></strong><small>ARTIFICIAL INTELLIGENCE</small></div></div>
+    <div class="sidebar-divider"></div>
+    <div class="section-tag">NAVIGATION</div>
+    <a href="#workspace" class="nav active"><span class="nav-icon">◈</span> Route explorer</a>
+    <a href="#results" class="nav"><span class="nav-icon">▤</span> Search results</a>
+    <a href="#about" class="nav"><span class="nav-icon">◎</span> About project</a>
+    <div class="sidebar-bottom"><span class="status-dot"></span> Ready for team algorithms <p>Fundamentals of Artificial Intelligence<br>West Bank • Road Network</p></div>
+  </aside>
+  <main id="workspace">
+    <div class="topbar"><span>AI / SEARCH STRATEGIES / <b>ROUTE EXPLORER</b></span><span class="academic">UNIVERSITY PROJECT · 2026</span></div>
+    <header class="hero"><div class="eyebrow"><span class="pill-dot"></span> INTERACTIVE SEARCH STRATEGY LAB</div><h1>Explore paths.<br><em>Compare intelligence.</em></h1><p>See how five search algorithms navigate the same road network. Choose a journey, explore the map, and compare the results.</p></header>
+    <section class="layout">
+      <div class="panel controls"><div class="panel-top"><div><div class="eyebrow small">01 / CONFIGURE</div><h2>Plan a route</h2></div><span class="round-icon">⌘</span></div>
+        <label for="start">START CITY</label><select id="start"><option>Loading...</option></select>
+        <div class="swap-wrap"><button id="swap" class="swap" title="Swap start and goal" aria-label="Swap cities">⇅</button></div>
+        <label for="goal">DESTINATION</label><select id="goal"><option>Loading...</option></select>
+        <div class="field-rule"></div><label for="algorithm">SEARCH ALGORITHM</label>
+        <select id="algorithm"><option value="bfs">Breadth-First Search (BFS)</option><option value="dfs">Depth-First Search (DFS)</option><option value="ucs">Uniform-Cost Search (UCS)</option><option value="greedy">Greedy Best-First Search</option><option value="astar">A* Search</option></select>
+        <button class="primary" id="searchBtn"><span>Find route</span><span>→</span></button>
+        <button class="secondary" id="compareBtn">Compare all algorithms <span>↗</span></button>
+        <div class="upload"><div class="eyebrow small">02 / DATASET</div><div class="upload-title">Custom road map <span>JSON</span></div><p>Upload a map with cities, coordinates and two-way roads.</p><label class="upload-btn" for="uploadInput">↑ Upload JSON map</label><input type="file" id="uploadInput" accept=".json,application/json" hidden><button id="resetBtn" class="text-button">↶ Restore default map</button></div>
+      </div>
+      <div class="panel map-panel"><div class="map-header"><div><div class="eyebrow small">LIVE MAP</div><h2 id="mapTitle">West Bank road network</h2></div><span id="mapCount" class="map-count">Loading...</span></div><div class="map-content"><svg id="mapSvg" role="img" aria-label="Interactive diagram of road network" viewBox="0 0 700 530"><text x="350" y="260" fill="#69788d" text-anchor="middle">Loading map...</text></svg></div><div class="legend"><span><i class="legend-node"></i> Cities</span><span><i class="legend-line"></i> Roads</span><span><i class="legend-route"></i> Selected route</span></div></div>
+    </section>
+    <section id="results" class="results"><div class="section-heading"><div><div class="eyebrow small">03 / OUTPUT</div><h2>Search results</h2></div><span id="runState" class="state-label">NOT RUN</span></div><div id="notice" class="notice" role="status" aria-live="polite">Select a start city, destination, and algorithm to begin.</div><div id="resultCards" class="stat-grid"><article class="stat"><span>PATH</span><strong id="pathResult">—</strong></article><article class="stat"><span>TOTAL DISTANCE</span><strong id="costResult">—</strong></article><article class="stat"><span>EXPANDED STEPS</span><strong id="stepsResult">—</strong></article></div><div id="comparison" class="comparison hidden"><h3>Algorithm comparison</h3><div class="table-wrap"><table><thead><tr><th>ALGORITHM</th><th>PATH</th><th>COST</th><th>STEPS</th><th>STATUS</th></tr></thead><tbody id="comparisonRows"></tbody></table></div></div></section>
+    <footer id="about"><div><strong>ROUTELAB</strong> / AI Route Search</div><span>BFS · DFS · UCS · GREEDY · A*</span><p>Algorithm functions are implemented separately by the student team. The interface displays results returned by those functions; it does not simulate search outcomes.</p></footer>
+  </main>
+</div>
+</body>
+</html>

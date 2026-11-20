@@ -1,117 +1,87 @@
+# AI Route Search · ROUTELAB
 
-# 🧭 AI Route Search
-### Explore the Map. Challenge the Algorithms.
+A Flask-based web UI for the *Fundamentals of Artificial Intelligence* route-search assignment. The interface includes a network visualizer, JSON map upload, search controls, and Compare All table. **The five search algorithms are placeholders by design:** students implement BFS, DFS, UCS, Greedy Best-First, and A* themselves.
 
-**One Map. Five Algorithms. Endless Possibilities.**
+## Get started
 
-An interactive route-finding web application that brings Artificial Intelligence search algorithms to life.
+Install Python 3.10+ and open this folder in VS Code.
 
-Discover how different search strategies navigate the same road network, explore possible routes, and reach their destinations.
-
----
-
-## 🌌 The Idea
-
-What if five algorithms were given the exact same challenge?
-
-**Same starting point. Same destination. Different decisions.**
-
-Some explore level by level. Others dive deep. Some follow the lowest cost, while others use heuristics to guide their search.
-
-AI Route Search turns these differences into an interactive experience.
-
-## 🧠 The Search Engine
-
-| Algorithm | Strategy |
-|---|---|
-| 🔵 **BFS** | Explore level by level |
-| 🟣 **DFS** | Dive deep before backtracking |
-| 🟢 **UCS** | Prioritize the lowest accumulated cost |
-| 🟠 **Greedy Best-First** | Follow the heuristic toward the goal |
-| 🔴 **A\*** | Balance actual cost and estimated distance |
-
-## ✨ Features
-
-- 🗺️ Visualize cities, roads, and routes
-- 📍 Choose a starting city and destination
-- 🔍 Explore five AI search algorithms
-- 📏 Calculate total route distance
-- 🧮 Track expanded search nodes
-- ⚖️ Compare all algorithms side by side
-- 🏆 Identify minimum-cost routes
-- 📂 Explore custom maps through JSON uploads
-
-## ⚙️ Built With
-
-| Layer | Technology |
-|---|---|
-| Backend | Python 🐍 |
-| Web Framework | Flask |
-| Frontend | HTML, CSS, JavaScript |
-| Map Data | JSON |
-| Version Control | Git & GitHub |
-
-## 🏗️ Architecture
-
-```text
-AI-Route-Search/
-│
-├── algorithms/
-│   ├── bfs.py
-│   ├── dfs.py
-│   ├── ucs.py
-│   ├── greedy.py
-│   └── astar.py
-│
-├── utils/
-│   └── graph.py
-│
-├── data/
-│   └── westbank_map.json
-│
-├── templates/
-│   └── index.html
-│
-├── static/
-│   ├── style.css
-│   └── script.js
-│
-├── app.py
-├── requirements.txt
-└── README.md
+```bash
+python -m venv .venv
 ```
 
-*Planned project structure. Files and directories will be added during development.*
+Activate your virtual environment on Windows PowerShell:
 
-## 🚀 Getting Started
+```powershell
+.venv\Scripts\Activate.ps1
+```
 
-🚧 **Currently Under Development**
+Install and run:
 
-The application is being built step by step.
+```bash
+pip install -r requirements.txt
+python app.py
+```
 
-Setup instructions and a live demonstration will be added when available.
+Open **http://127.0.0.1:5000/**.
 
-## 🎯 Project Goals
+## Team algorithm contract
 
-- Implement five classic AI search algorithms from scratch.
-- Understand how search strategies explore a graph.
-- Compare routes, costs, and search efficiency.
-- Visualize algorithm results through an interactive web interface.
-- Support different road networks using JSON data.
+Your team should agree on this shared contract before implementing the algorithms:
 
----
-## 👩‍💻 Development Team
+```python
+# algorithms/bfs.py  (same for dfs.py, ucs.py, greedy.py, astar.py)
+def search(graph, start, goal):
+    # graph: dict[str, list[tuple[str, number]]]
+    # start, goal: city name strings
+    return {"path": [start, "...", goal], "cost": 123, "steps": 5}
+```
 
-**Team Member & Student ID**
+The example above is just a shape, **not valid output to copy**. In an actual implementation:
 
-- **Tala Daraghmeh** => 12429337
-- **Yazan Nasser** => 12400750
-- **Bahaa Alshami** => 12428749
+- `path` includes the start and goal, with each consecutive city pair connected by a road.
+- `cost` is the sum of road weights along the path. The backend checks this.
+- `steps` is an integer counting expanded nodes per assignment rules.
+- For no available route, return `{"path": [], "cost": None, "steps": number_of_expanded_nodes}`.
+- For start == goal, return a single-city path with cost 0 and correct expanded step count.
+- Goal test must happen on frontier removal; never expand the same city twice; alphabetical tie-breaking.
+- Implement BFS/DFS/UCS/Greedy/A* manually. Do not use ready-made search/graph libraries.
 
----
+Each algorithm currently raises `NotImplementedError` until your team replaces the function. The UI shows an explicit *not implemented* message, not fake search results.
 
-### 🪐 Every Path Tells a Different Story.
+## API endpoints
 
-*The destination is the same. The journey is the algorithm.*
+| Endpoint | Method | Purpose |
+|---|---|---|
+| `/` | GET | Web interface |
+| `/api/map` | GET | Read active map |
+| `/api/map` | POST multipart `file` | Upload and validate JSON map |
+| `/api/map/reset` | POST | Restore default West Bank map |
+| `/api/search` | POST JSON | Run one algorithm |
+| `/api/compare` | POST JSON | Run all five and compare |
 
+Example JSON request for `/api/search`:
 
+```json
+{"start":"Jenin","goal":"Hebron","algorithm":"bfs"}
+```
+
+The selected JSON map is stored server-side for each browser session while the development server is running. Uploaded maps are not saved permanently. In production, implement persistent storage and a secure secret key. `app.run(debug=True)` is for local development only.
+
+## Integrating with existing repo
+
+This is an independent frontend/backend scaffold based on the assignment JSON. The actual existing GitHub contents were not available for automatic merge in this session. **Do not overwrite teammates' implementations.** Inspect diffs and copy only needed files, then commit in a new branch.
+
+Recommended branch: `feature/flask-interface`. If algorithm files exist and already contain real implementations, keep those versions and only ensure each exports the agreed `search(graph, start, goal)` function. Similarly review your current README before replacing it.
+
+## Tests
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+Tests cover map validation, bidirectional roads, deterministic neighbor ordering, and known route cost. End-to-end tests for algorithm correctness need to be added by the team.
+
+## Official assignment
+
+Default map: 11 cities and 19 bidirectional roads in `data/westbank_map.json`. All five algorithms must return route, km and expansion count. The UI must draw the network, display highlighted paths, support uploading map JSON, compare results, and identify the lowest cost. Every team member must understand the complete code for the discussion.
