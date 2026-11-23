@@ -506,3 +506,8 @@ footer p {
     font-size: 12px;
   }
 }
+/* Part 3: start/goal colours and clickable comparison rows */
+#mapSvg .point.start { fill: #3d6fa8; }
+#mapSvg .point.goal  { fill: #b5543c; }
+tbody tr.clickable   { cursor: pointer; }
+tbody tr.selected    { background: #efe3c8; box-shadow: inset 3px 0 0 #4c7540; }

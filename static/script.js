@@ -61,7 +61,8 @@ function renderMap() {
   const nodes=el('g');
   for(const city of mapData.cities) {
     const p=pos[city.name],route=selectedPath.includes(city.name),group=el('g',{class:'point-group'});
-    const circle=el('circle',{cx:p.x,cy:p.y,r:route?8:6,class:`point${route?' route':''}`});
+       const end=city.name===selectedPath[0]?' start':city.name===selectedPath[selectedPath.length-1]?' goal':'';
+       const circle=el('circle',{cx:p.x,cy:p.y,r:route?8:6,class:`point${route?' route':''}$ {end}`});
     const label=el('text',{x:p.x+11,y:p.y-10,class:'city-label'});label.textContent=city.name;
     const title=el('title');title.textContent=city.name;group.append(circle,label,title);nodes.append(group);
   }
