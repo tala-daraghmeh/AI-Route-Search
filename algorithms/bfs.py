@@ -8,5 +8,46 @@ Interface:
     Alpha tie-break, and steps count expanded nodes (per instructor).
 """
 
+
+
+from collections import deque
+
+
 def search(graph, start, goal):
-    raise NotImplementedError('Algorithm BFS is not implemented yet. Team member should add it.')
+    queue = deque([(start, [start], 0)])
+    visited = set()
+    steps = 0
+
+    while queue:
+        city, path, cost = queue.popleft()
+
+        if city in visited:
+            continue
+
+        visited.add(city)
+        steps += 1
+
+        if city == goal:
+            return {
+                "path": path,
+                "cost": cost,
+                "steps": steps
+            }
+
+        for neighbor, distance in sorted(graph[city]):
+            if neighbor not in visited:
+                queue.append((
+                    neighbor,
+                    path + [neighbor],
+                    cost + distance
+                ))
+
+    return {
+        "path": [],
+        "cost": None,
+        "steps": steps
+    }
+
+
+
+

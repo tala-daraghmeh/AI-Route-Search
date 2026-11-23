@@ -9,4 +9,33 @@ Interface:
 """
 
 def search(graph, start, goal):
-    raise NotImplementedError('Algorithm DFS is not implemented yet. Team member should add it.')
+     stack=[(start,[start],0)]
+     visited=set()
+     steps=0
+     while stack:
+          city,path,cost=stack.pop()    
+          if city in visited:
+                continue
+          visited.add(city)
+          steps+=1
+          if city==goal:
+                return {
+                    "path": path,
+                    "cost": cost,
+                    "steps": steps
+                }
+          for neighbor,distance in sorted(
+                graph[city],reverse=True
+                ):
+                   if neighbor not in visited:
+                      stack.append((
+                          neighbor,
+                          path+[neighbor],
+                          cost+distance
+                      ))
+     return {
+            "path": [],
+            "cost": None,
+            "steps": steps
+        }
+
