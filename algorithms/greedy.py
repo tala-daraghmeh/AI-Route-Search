@@ -9,7 +9,7 @@ def search(graph, start, goal):
         return {'path': [], 'cost': None, 'steps': 0}
 
     if start == goal:
-        return {'path': [start], 'cost': 0, 'steps': 0}
+        return {'path': [start], 'cost': 0, 'steps': 1}
 
     counter = count()
     frontier = [(heuristic(graph, start, goal), start, next(counter), [start])]
@@ -21,6 +21,9 @@ def search(graph, start, goal):
 
         if city in visited:
             continue
+
+        visited.add(city)
+        steps += 1
 
         if city == goal:
             total_cost = 0
@@ -37,8 +40,7 @@ def search(graph, start, goal):
                 'steps': steps
             }
 
-        visited.add(city)
-        steps += 1
+      
 
         for neighbor, distance in graph[city]:
             if neighbor not in visited:
